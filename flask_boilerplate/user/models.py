@@ -37,7 +37,7 @@ class User(UserMixin, PkModel):
         db.DateTime, nullable=False, default=dt.datetime.now(dt.timezone.utc)
     )
     first_name = Column(db.String(30), nullable=True)
-    last_name = Column(db.String(30), nullable=True)
+    last_name = Column(db.String(64), nullable=True)
     active = Column(db.Boolean(), default=False)
     is_admin = Column(db.Boolean(), default=False)
 

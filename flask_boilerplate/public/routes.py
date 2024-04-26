@@ -12,8 +12,7 @@ from flask import (
 from flask_login import login_required, login_user, logout_user
 
 from flask_boilerplate.extensions import login_manager
-from flask_boilerplate.public.forms import LoginForm
-from flask_boilerplate.user.forms import RegisterForm
+from flask_boilerplate.public.forms import LoginForm, RegisterForm
 from flask_boilerplate.user.models import User
 from flask_boilerplate.utils import flash_errors
 

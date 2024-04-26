@@ -33,7 +33,7 @@ class CRUDMixin(object):
         """Save the record."""
         db.session.add(self)
         if commit:
-            db.session.commit()
+            db.session.commit() # commit transaction for database change 
         return self
 
     def delete(self, commit: bool = True) -> None:

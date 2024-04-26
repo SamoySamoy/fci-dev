@@ -5,6 +5,7 @@ ARG INSTALL_NODE_VERSION=${INSTALL_NODE_VERSION:-NODE_VERSION_NOT_SET}
 FROM node:${INSTALL_NODE_VERSION}-bullseye-slim AS node
 FROM python:${INSTALL_PYTHON_VERSION}-slim-bullseye AS builder
 
+
 WORKDIR /app
 
 COPY --from=node /usr/local/bin/ /usr/local/bin/
@@ -14,6 +15,7 @@ RUN true
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY requirements requirements
 RUN pip install --no-cache -r requirements/prod.txt
+
 
 COPY package.json ./
 RUN npm install
