@@ -2,21 +2,22 @@
 """Book models."""
 import datetime as dt
 
-from sqlalchemy.ext.hybrid import hybrid_property
-from flask_boilerplate.database import Column, PkModel, db, reference_col, relationship
-from flask_boilerplate.extensions import bcrypt
+from flask_boilerplate.database import Model, db
+from sqlalchemy.orm import Mapped, mapped_column
 
 
-class Book(PkModel):
+class Book(Model):
     """Book model."""
 
-    __tablename__ = "books"
-    title = Column(db.String(255), nullable=False)
-    author_id = Column(db.Integer, db.ForeignKey("authors.id"))
-    genre = Column(db.String(100))
-    published_year = Column(db.String(100))
-    # Establishing the bidirectional relationship
-    author = relationship("Author", back_populates="books")
+    __tablename__ = "book_table"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(unique=True, nullable=False)
+    author_id: Mapped[int] = mapped_column(ForeignKey("author_table.id"))
+    author: Mapped["Author"] = relationship(back_populates="book")
+    genre: Mapped[str]
+    published_year: Mapped[str]
+
 
     def __init__(self, title, author_id=None, genre=None, published_year=None):
         self.title = title

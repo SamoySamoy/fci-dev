@@ -16,6 +16,7 @@ class Base(DeclarativeBase):
 
 
 db = SQLAlchemy(model_class=Base)
+
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 migrate = Migrate()
