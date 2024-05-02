@@ -2,6 +2,8 @@
 """Book views. """
 from flask import Blueprint, request, jsonify
 from .models import Book
+from pydantic import ValidationError
+from flask_boilerplate.extensions import db
 from .schemas import (
     BookSchema,
     BookCreateSchema,
@@ -16,14 +18,14 @@ blueprint = Blueprint("book", __name__, url_prefix="/books", static_folder="../s
 @blueprint.route("/", methods=["GET"])
 def get_all_books():
     books = Book.query.all()
-    books_pydantic = [BookSchema.from_orm(book) for book in books]
+    books_pydantic = [BookSchema.from_orm(book).model_dump() for book in books]
     return jsonify(books_pydantic)
 
 
 @blueprint.route("/<int:book_id>", methods=["GET"])
 def get_book(book_id):
     book = Book.query.get_or_404(book_id)
-    book_pydantic = BookSchema.from_orm(book)
+    book_pydantic = BookSchema.from_orm(book).model_dump()
     return jsonify(book_pydantic)
 
 
@@ -48,7 +50,7 @@ def update_book(book_id):
     data = request.json
 
     try:
-        book_schema = BookCreateSchema(**data)
+        book_schema = BookUpdateSchema(**data)
         books = book_schema.dict(exclude_unset=True)
         for key, value in books.items():
             setattr(book, key, value)

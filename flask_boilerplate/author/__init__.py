@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-"""The user module."""
+"""The author module."""
 from . import routes  # noqa

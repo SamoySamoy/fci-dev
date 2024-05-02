@@ -5,11 +5,10 @@ import sys
 
 from flask import Flask, render_template
 
-from flask_boilerplate import commands, public, user, book
+from flask_boilerplate import commands, public, user, book, author
 from flask_boilerplate.extensions import (
     bcrypt,
     cache,
-    csrf_protect,
     db,
     debug_toolbar,
     flask_static_digest,
@@ -39,7 +38,6 @@ def register_extensions(app):
     bcrypt.init_app(app)
     cache.init_app(app)
     db.init_app(app)
-    csrf_protect.init_app(app)
     login_manager.init_app(app)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
@@ -50,8 +48,8 @@ def register_extensions(app):
 def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(public.routes.blueprint)
-    app.register_blueprint(user.routes.blueprint)
     app.register_blueprint(book.routes.blueprint)
+    app.register_blueprint(author.routes.blueprint)
     return None
 
 
