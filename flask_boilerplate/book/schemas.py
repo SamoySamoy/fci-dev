@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional, Type, TypeVar
 
+
 class BookSchema(BaseModel):
     id: int
     title: str

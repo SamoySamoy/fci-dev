@@ -4,7 +4,6 @@ from typing import Optional, Type, TypeVar
 from .extensions import db
 
 
-
 class Mixin(object):
     """Mixin that adds convenience methods"""
 

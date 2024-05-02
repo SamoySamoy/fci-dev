@@ -18,7 +18,8 @@ blueprint = Blueprint(
 
 @blueprint.route("/", methods=["GET"])
 def get_all_authors():
-    authors = db.session.execute(db.select(Author))
+    authors = db.session.scalars(db.select(Author).order_by(Author.id)).all()
+
     authors_pydantic = [
         AuthorSchema.from_orm(author).model_dump() for author in authors
     ]
@@ -27,8 +28,10 @@ def get_all_authors():
 
 @blueprint.route("/<int:author_id>", methods=["GET"])
 def get_author(author_id):
-    author = db.get_or_404(Author, author_id)
-    author_pydantic = authorSchema.from_orm(author).model_dump()
+    author = db.session.scalars(db.select(Author).where(Author.id == author_id)).all()[
+        0
+    ]
+    author_pydantic = AuthorSchema.from_orm(author).model_dump()
     return jsonify(author_pydantic)
 
 
@@ -48,7 +51,9 @@ def create_author():
 
 @blueprint.route("/<int:author_id>", methods=["PUT"])
 def update_author(author_id):
-    author = db.get_or_404(Author, author_id)
+    author = db.session.scalars(db.select(Author).where(Author.id == author_id)).all()[
+        0
+    ]
     data = request.json
 
     try:
@@ -65,7 +70,9 @@ def update_author(author_id):
 
 @blueprint.route("/<int:author_id>", methods=["DELETE"])
 def delete_author(author_id):
-    author = db.get_or_404(Author, author_id)
+    author = db.session.scalars(db.select(Author).where(Author.id == author_id)).all()[
+        0
+    ]
     db.session.delete(author)
     db.session.commit()
     return jsonify({"message": "author deleted successfully"})

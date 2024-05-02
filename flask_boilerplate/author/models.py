@@ -8,7 +8,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 
 
-
 class Author(Model):
     """Author model."""
 
@@ -17,11 +16,11 @@ class Author(Model):
     name: Mapped[str] = mapped_column(unique=True, nullable=False)
     info: Mapped[str]
     books: Mapped[List["Book"]] = relationship(back_populates="author")
-    
 
-    def __init__(self, name, infor=None):
+    def __init__(self, name, info=None):
         self.name = name
         self.info = info
+    
 
     def __repr__(self):
         return f"<Author {self.name}>"

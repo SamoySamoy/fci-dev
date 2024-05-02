@@ -17,14 +17,14 @@ blueprint = Blueprint("book", __name__, url_prefix="/books", static_folder="../s
 
 @blueprint.route("/", methods=["GET"])
 def get_all_books():
-    books = db.session.execute(db.select(Book))
+    books = db.session.scalars(db.select(Book).order_by(Book.id)).all()
     books_pydantic = [BookSchema.from_orm(book).model_dump() for book in books]
     return jsonify(books_pydantic)
 
 
 @blueprint.route("/<int:book_id>", methods=["GET"])
 def get_book(book_id):
-    book = db.get_or_404(Book, book_id)
+    book = db.session.scalars(db.select(Book).where(Book.id == book_id)).all()[0]
     book_pydantic = BookSchema.from_orm(book).model_dump()
     return jsonify(book_pydantic)
 
@@ -46,7 +46,7 @@ def create_book():
 
 @blueprint.route("/<int:book_id>", methods=["PUT"])
 def update_book(book_id):
-    book = db.get_or_404(Book, book_id)
+    book = db.session.scalars(db.select(Book).where(Book.id == book_id)).all()[0]
     data = request.json
 
     try:
@@ -63,7 +63,7 @@ def update_book(book_id):
 
 @blueprint.route("/<int:book_id>", methods=["DELETE"])
 def delete_book(book_id):
-    book = db.get_or_404(Book, book_id)
+    book = db.session.scalars(db.select(Book).where(Book.id == book_id)).all()[0]
     db.session.delete(book)
     db.session.commit()
     return jsonify({"message": "Book deleted successfully"})

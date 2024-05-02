@@ -3,7 +3,6 @@
 from flask_bcrypt import Bcrypt
 from flask_caching import Cache
 from flask_debugtoolbar import DebugToolbarExtension
-from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_static_digest import FlaskStaticDigest
 from flask import Flask
@@ -18,7 +17,6 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 
 bcrypt = Bcrypt()
-login_manager = LoginManager()
 migrate = Migrate()
 cache = Cache()
 debug_toolbar = DebugToolbarExtension()

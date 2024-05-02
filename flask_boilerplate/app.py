@@ -12,7 +12,6 @@ from flask_boilerplate.extensions import (
     db,
     debug_toolbar,
     flask_static_digest,
-    login_manager,
     migrate,
 )
 
@@ -38,7 +37,6 @@ def register_extensions(app):
     bcrypt.init_app(app)
     cache.init_app(app)
     db.init_app(app)
-    login_manager.init_app(app)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
     flask_static_digest.init_app(app)
@@ -71,7 +69,7 @@ def register_shellcontext(app):
 
     def shell_context():
         """Shell context objects."""
-        return {"db": db, "User": user.models.User}
+        return {"db": db, "Book": book.models.Book}
 
     app.shell_context_processor(shell_context)
 
