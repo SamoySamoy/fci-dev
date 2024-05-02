@@ -4,7 +4,6 @@ from __future__ import annotations
 from typing import List, Optional
 import datetime as dt
 from flask_boilerplate.database import db, Model
-from flask_boilerplate.book.models import Book
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 

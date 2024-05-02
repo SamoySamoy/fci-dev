@@ -5,7 +5,7 @@ import sys
 
 from flask import Flask, render_template
 
-from flask_boilerplate import commands, public, user, book, author
+from flask_boilerplate import commands, book, author
 from flask_boilerplate.extensions import (
     bcrypt,
     cache,
@@ -47,7 +47,6 @@ def register_extensions(app):
 
 def register_blueprints(app):
     """Register Flask blueprints."""
-    app.register_blueprint(public.routes.blueprint)
     app.register_blueprint(book.routes.blueprint)
     app.register_blueprint(author.routes.blueprint)
     return None
