@@ -1,7 +1,3 @@
-# flask_template
-
-Flask
-
 ## Docker Quickstart
 
 This app can be run completely using `Docker` and `docker compose`. **Using Docker is recommended, as it guarantees the application is run using compatible versions of Python and Node**.
