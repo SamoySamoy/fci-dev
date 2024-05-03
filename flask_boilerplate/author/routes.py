@@ -23,16 +23,19 @@ def get_all_authors():
     authors_pydantic = [
         AuthorSchema.from_orm(author).model_dump() for author in authors
     ]
-    return jsonify(authors_pydantic)
+    return jsonify(authors_pydantic), 200
 
 
 @blueprint.route("/<int:author_id>", methods=["GET"])
 def get_author(author_id):
-    author = db.session.scalars(db.select(Author).where(Author.id == author_id)).all()[
-        0
-    ]
-    author_pydantic = AuthorSchema.from_orm(author).model_dump()
-    return jsonify(author_pydantic)
+    try:
+        author = db.session.scalars(
+            db.select(Author).where(Author.id == author_id)
+        ).all()[0]
+        author_pydantic = AuthorSchema.from_orm(author).model_dump()
+        return jsonify(author_pydantic), 200
+    except IndexError:
+        return jsonify({"error": f"Author with ID {author_id} not found"}), 404
 
 
 @blueprint.route("/", methods=["POST"])
@@ -43,10 +46,10 @@ def create_author():
         author = Author(**author_schema.dict())
         db.session.add(author)
         db.session.commit()
-        return jsonify({"message": "author created successfully", "id": author.id})
+        return jsonify({"message": "author created successfully", "id": author.id}), 200
     except ValidationError as e:
         print(e.errors())
-        return jsonify({"error": "Invalid payload", "details": e.errors()})
+        return jsonify({"error": "Invalid payload", "details": e.errors()}), 400
 
 
 @blueprint.route("/<int:author_id>", methods=["PUT"])
@@ -62,17 +65,21 @@ def update_author(author_id):
         for key, value in authors.items():
             setattr(Author, key, value)
         db.session.commit()
-        return jsonify({"message": "author updated successfully"})
+        return jsonify({"message": "author updated successfully"}), 200
     except ValidationError as e:
         print(e.errors())
-        return jsonify({"error": "Invalid payload", "details": e.errors()})
+        return jsonify({"error": "Invalid payload", "details": e.errors()}), 400
 
 
 @blueprint.route("/<int:author_id>", methods=["DELETE"])
 def delete_author(author_id):
-    author = db.session.scalars(db.select(Author).where(Author.id == author_id)).all()[
-        0
-    ]
-    db.session.delete(author)
-    db.session.commit()
-    return jsonify({"message": "author deleted successfully"})
+
+    try:
+        author = db.session.scalars(
+            db.select(Author).where(Author.id == author_id)
+        ).all()[0]
+        db.session.delete(author)
+        db.session.commit()
+        return jsonify({"message": "author deleted successfully"}), 200
+    except IndexError:
+        return jsonify({"error": f"Author with ID {author_id} not found"}), 404

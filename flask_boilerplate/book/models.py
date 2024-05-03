@@ -22,7 +22,7 @@ class Book(Model):
 
     def __init__(self, title, author_id=None, genre=None, published_year=None):
         self.title = title
-        self.author_id = author
+        self.author_id = author_id
         self.genre = genre
         self.published_year = published_year
 
