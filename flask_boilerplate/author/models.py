@@ -5,7 +5,7 @@ from typing import List, Optional
 import datetime as dt
 from flask_boilerplate.database import db, Model
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, String
 
 
 class Author(Model):
@@ -13,8 +13,8 @@ class Author(Model):
 
     __tablename__ = "author_table"
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(unique=True, nullable=False)
-    info: Mapped[str]
+    name: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    info: Mapped[str] = mapped_column(String(255))
     books: Mapped[List["Book"]] = relationship(back_populates="author")
 
     def __init__(self, name, info=None):

@@ -14,6 +14,7 @@ from flask_boilerplate.extensions import (
     flask_static_digest,
     migrate,
 )
+import pymysql
 
 
 def create_app(config_object="flask_boilerplate.settings"):

@@ -38,6 +38,7 @@ ENV PATH="/home/sid/.local/bin:${PATH}"
 
 COPY --from=builder --chown=sid:sid /app/flask_boilerplate/static /app/flask_boilerplate/static
 COPY requirements requirements
+RUN pip install PyMySQL
 RUN pip install --no-cache --user -r requirements/prod.txt
 
 COPY supervisord.conf /etc/supervisor/supervisord.conf
@@ -53,6 +54,7 @@ CMD ["-c", "/etc/supervisor/supervisord.conf"]
 
 # ================================= DEVELOPMENT ================================
 FROM builder AS development
+RUN pip install PyMySQL
 RUN pip install --no-cache -r requirements/dev.txt
 EXPOSE 2992
 EXPOSE 5000

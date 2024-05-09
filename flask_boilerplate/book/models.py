@@ -5,7 +5,7 @@ from typing import List, Optional
 import datetime as dt
 from flask_boilerplate.database import db, Model
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, String
 
 
 class Book(Model):
@@ -14,11 +14,11 @@ class Book(Model):
     __tablename__ = "book_table"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str] = mapped_column(unique=True, nullable=False)
-    author_id: Mapped[int] = mapped_column(ForeignKey("author_table.id"))
+    title: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    author_id: Mapped[int] = mapped_column(ForeignKey("author_table.id"), nullable=False)
     author: Mapped["Author"] = relationship(back_populates="books")
-    genre: Mapped[str]
-    published_year: Mapped[str]
+    genre: Mapped[str] = mapped_column(String(255))
+    published_year: Mapped[str] = mapped_column(String(255))
 
     def __init__(self, title, author_id=None, genre=None, published_year=None):
         self.title = title
