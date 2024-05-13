@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 """Book views. """
-from flask import Blueprint, request, jsonify
-from .models import Book
+from flask import Blueprint, jsonify, request
 from pydantic import ValidationError
+
 from flask_boilerplate.extensions import db
-from .schemas import (
-    BookSchema,
-    BookCreateSchema,
-    BookUpdateSchema,
-)
+
+from .models import Book
+from .schemas import BookCreateSchema, BookSchema, BookUpdateSchema
 
 # from .utils import book_to_dict, books_to_dict
 

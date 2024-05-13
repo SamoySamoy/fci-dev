@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """Author models."""
 from __future__ import annotations
-from typing import List, Optional
+
 import datetime as dt
-from flask_boilerplate.database import db, Model
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import List, Optional
+
 from sqlalchemy import ForeignKey, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from flask_boilerplate.database import Model, db
 
 
 class Author(Model):
@@ -20,7 +23,6 @@ class Author(Model):
     def __init__(self, name, info=None):
         self.name = name
         self.info = info
-    
 
     def __repr__(self):
         return f"<Author {self.name}>"

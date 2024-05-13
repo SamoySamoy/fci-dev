@@ -3,9 +3,10 @@
 import logging
 import sys
 
+import pymysql
 from flask import Flask, render_template
 
-from flask_boilerplate import commands, book, author, public
+from flask_boilerplate import author, book, commands, public
 from flask_boilerplate.extensions import (
     bcrypt,
     cache,
@@ -14,7 +15,6 @@ from flask_boilerplate.extensions import (
     flask_static_digest,
     migrate,
 )
-import pymysql
 
 
 def create_app(config_object="flask_boilerplate.settings"):

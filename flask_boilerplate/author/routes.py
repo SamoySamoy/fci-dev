@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 """author views. """
-from flask import Blueprint, request, jsonify
-from .models import Author
+from flask import Blueprint, jsonify, request
 from pydantic import ValidationError
-from flask_boilerplate.extensions import db
-from .schemas import (
-    AuthorSchema,
-    AuthorCreateSchema,
-    AuthorUpdateSchema,
-)
 
+from flask_boilerplate.extensions import db
+
+from .models import Author
+from .schemas import AuthorCreateSchema, AuthorSchema, AuthorUpdateSchema
 
 blueprint = Blueprint(
     "author", __name__, url_prefix="/authors", static_folder="../static"
