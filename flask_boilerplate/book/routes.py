@@ -40,6 +40,7 @@ def create_book():
         db.session.add(book)
         db.session.commit()
         return jsonify({"message": "Book created successfully", "id": book.id}), 200
+
     except ValidationError as e:
         print(e.errors())
         return jsonify({"error": "Invalid payload", "details": e.errors()}), 400

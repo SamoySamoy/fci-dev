@@ -3,4 +3,3 @@ source = flask_boilerplate
 omit = 
     tests/*
     autoapp.py
-

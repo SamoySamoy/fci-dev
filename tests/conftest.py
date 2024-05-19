@@ -9,7 +9,7 @@ from webtest import TestApp
 from flask_boilerplate.app import create_app
 from flask_boilerplate.database import db as _db
 
-from .factories import UserFactory
+
 
 
 @pytest.fixture
@@ -18,6 +18,7 @@ def app():
     _app = create_app("tests.settings")
     _app.logger.setLevel(logging.CRITICAL)
     ctx = _app.test_request_context()
+    
     ctx.push()
 
     yield _app
@@ -29,6 +30,7 @@ def app():
 def testapp(app):
     """Create Webtest app."""
     return TestApp(app)
+
 
 
 @pytest.fixture
@@ -45,9 +47,3 @@ def db(app):
     _db.drop_all()
 
 
-@pytest.fixture
-def user(db):
-    """Create user for the tests."""
-    user = UserFactory(password="myprecious")
-    db.session.commit()
-    return user

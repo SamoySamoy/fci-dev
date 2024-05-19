@@ -26,30 +26,6 @@ COPY assets assets
 COPY .env.example .env
 RUN npm run-script build
 
-# ================================= PRODUCTION =================================
-FROM python:${INSTALL_PYTHON_VERSION}-slim-buster as production
-
-WORKDIR /app
-
-RUN useradd -m sid
-RUN chown -R sid:sid /app
-USER sid
-ENV PATH="/home/sid/.local/bin:${PATH}"
-
-COPY --from=builder --chown=sid:sid /app/flask_boilerplate/static /app/flask_boilerplate/static
-COPY requirements requirements
-RUN pip install PyMySQL
-RUN pip install --no-cache --user -r requirements/prod.txt
-
-COPY supervisord.conf /etc/supervisor/supervisord.conf
-COPY supervisord_programs /etc/supervisor/conf.d
-
-
-COPY . .
-
-EXPOSE 5000
-ENTRYPOINT ["/bin/bash", "shell_scripts/supervisord_entrypoint.sh"]
-CMD ["-c", "/etc/supervisor/supervisord.conf"]
 
 
 # ================================= DEVELOPMENT ================================
@@ -58,4 +34,5 @@ RUN pip install PyMySQL
 RUN pip install --no-cache -r requirements/dev.txt
 EXPOSE 2992
 EXPOSE 5000
+COPY . .
 CMD [ "npm", "start" ]
