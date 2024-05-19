@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""author views. """
+"""Author views."""
 from flask import Blueprint, jsonify, request
 from pydantic import ValidationError
 
@@ -15,6 +15,7 @@ blueprint = Blueprint(
 
 @blueprint.route("/", methods=["GET"])
 def get_all_authors():
+    """Retrieve all authors."""
     authors = db.session.scalars(db.select(Author).order_by(Author.id)).all()
 
     authors_pydantic = [
@@ -25,6 +26,7 @@ def get_all_authors():
 
 @blueprint.route("/<int:author_id>", methods=["GET"])
 def get_author(author_id):
+    """Retrieve a single author by ID."""
     try:
         author = db.session.scalars(
             db.select(Author).where(Author.id == author_id)
@@ -37,6 +39,7 @@ def get_author(author_id):
 
 @blueprint.route("/", methods=["POST"])
 def create_author():
+    """Create a new author."""
     data = request.json
     try:
         author_schema = AuthorCreateSchema(**data)
@@ -51,16 +54,21 @@ def create_author():
 
 @blueprint.route("/<int:author_id>", methods=["PUT"])
 def update_author(author_id):
-    author = db.session.scalars(db.select(Author).where(Author.id == author_id)).all()[
-        0
-    ]
+    """Update an existing author."""
+    try:
+        author = db.session.scalars(
+            db.select(Author).where(Author.id == author_id)
+        ).all()[0]
+    except IndexError:
+        return jsonify({"error": f"Author with ID {author_id} not found"}), 404
+
     data = request.json
 
     try:
         author_schema = AuthorUpdateSchema(**data)
-        authors = author_schema.dict(exclude_unset=True)
-        for key, value in authors.items():
-            setattr(Author, key, value)
+        updates = author_schema.dict(exclude_unset=True)
+        for key, value in updates.items():
+            setattr(author, key, value)
         db.session.commit()
         return jsonify({"message": "author updated successfully"}), 200
     except ValidationError as e:
@@ -70,7 +78,7 @@ def update_author(author_id):
 
 @blueprint.route("/<int:author_id>", methods=["DELETE"])
 def delete_author(author_id):
-
+    """Delete an author by ID."""
     try:
         author = db.session.scalars(
             db.select(Author).where(Author.id == author_id)

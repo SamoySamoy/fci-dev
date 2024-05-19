@@ -10,15 +10,13 @@ from flask_boilerplate.app import create_app
 from flask_boilerplate.database import db as _db
 
 
-
-
 @pytest.fixture
 def app():
     """Create application for the tests."""
     _app = create_app("tests.settings")
     _app.logger.setLevel(logging.CRITICAL)
     ctx = _app.test_request_context()
-    
+
     ctx.push()
 
     yield _app
@@ -30,7 +28,6 @@ def app():
 def testapp(app):
     """Create Webtest app."""
     return TestApp(app)
-
 
 
 @pytest.fixture
@@ -45,5 +42,3 @@ def db(app):
     # Explicitly close DB connection
     _db.session.close()
     _db.drop_all()
-
-
