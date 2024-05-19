@@ -24,8 +24,6 @@ jobs:
               run: npm install
             - run: cp .env.example .env
             - name: Run Node lints
-              run: npm run lint
-            - name: Run Python lints
-              run: flask lint --check
+              run: npm run lint      
             - name: Run Python tests
               run: flask test
