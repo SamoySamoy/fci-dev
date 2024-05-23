@@ -7,7 +7,7 @@ from typing import List
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from flask_boilerplate.database import Model
+from backend.database import Model
 
 
 class Author(Model):

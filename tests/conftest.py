@@ -6,8 +6,8 @@ import logging
 import pytest
 from webtest import TestApp
 
-from flask_boilerplate.app import create_app
-from flask_boilerplate.database import db as _db
+from backend.app import create_app
+from backend.database import db as _db
 
 
 @pytest.fixture

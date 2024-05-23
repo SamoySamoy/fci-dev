@@ -25,7 +25,13 @@ def test(coverage):
 
     args = [TEST_PATH, "--verbose"]
     if coverage:
-        args.append("--cov=flask_boilerplate")
+        args.append("--cov=backend")
+        # args.append("--cov-report=xml")
+       
+        
+        
+       
+        
     rv = pytest.main(args)
     exit(rv)
 

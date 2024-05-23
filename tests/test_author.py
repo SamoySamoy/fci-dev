@@ -7,7 +7,7 @@ import pytest
 @pytest.mark.usefixtures("db")
 class TestAuthorRoutes:
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_get_all_authors(self, mock_db_session, testapp):
         mock_author = MagicMock()
         mock_author.id = 1
@@ -20,7 +20,7 @@ class TestAuthorRoutes:
         assert response.status_code == 200
         assert b"Mock Author" in response.body
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_get_author(self, mock_db_session, testapp):
         mock_author = MagicMock()
         mock_author.id = 1
@@ -33,7 +33,7 @@ class TestAuthorRoutes:
         assert response.status_code == 200
         assert b"Mock Author" in response.body
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_create_author(self, mock_db_session, testapp):
         mock_db_session.add.return_value = None
         mock_db_session.commit.return_value = None
@@ -42,7 +42,7 @@ class TestAuthorRoutes:
         response = testapp.post_json("/authors/", author_data)
         assert response.status_code == 200
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_update_author(self, mock_db_session, testapp):
         mock_author = MagicMock()
         mock_author.id = 1
@@ -54,7 +54,7 @@ class TestAuthorRoutes:
         response = testapp.put_json("/authors/1", author_update_data)
         assert response.status_code == 200
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_delete_author(self, mock_db_session, testapp):
         mock_author = MagicMock()
         mock_author.id = 1

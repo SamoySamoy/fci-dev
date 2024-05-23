@@ -6,8 +6,8 @@ import sys
 import pymysql
 from flask import Flask, render_template
 
-from flask_boilerplate import author, book, commands, public
-from flask_boilerplate.extensions import (
+from backend import author, book, commands, public
+from backend.extensions import (
     bcrypt,
     cache,
     db,
@@ -17,7 +17,7 @@ from flask_boilerplate.extensions import (
 )
 
 
-def create_app(config_object="flask_boilerplate.settings"):
+def create_app(config_object="backend.settings"):
     """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
 
     :param config_object: The configuration object to use.

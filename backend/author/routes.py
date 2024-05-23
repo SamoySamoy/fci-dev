@@ -3,7 +3,7 @@
 from flask import Blueprint, jsonify, request
 from pydantic import ValidationError
 
-from flask_boilerplate.extensions import db
+from backend.extensions import db
 
 from .models import Author
 from .schemas import AuthorCreateSchema, AuthorSchema, AuthorUpdateSchema

@@ -8,7 +8,7 @@ from typing import List, Optional
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from flask_boilerplate.database import Model, db
+from backend.database import Model, db
 
 
 class Book(Model):

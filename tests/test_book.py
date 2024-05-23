@@ -7,7 +7,7 @@ import pytest
 @pytest.mark.usefixtures("db")
 class TestBookRoutes:
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_get_all_books(self, mock_db_session, testapp):
         mock_book = MagicMock()
         mock_book.id = 1
@@ -22,7 +22,7 @@ class TestBookRoutes:
         assert response.status_code == 200
         assert b"Mock Book" in response.body
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_get_book(self, mock_db_session, testapp):
         mock_book = MagicMock()
         mock_book.id = 1
@@ -37,7 +37,7 @@ class TestBookRoutes:
         assert response.status_code == 200
         assert b"Mock Book" in response.body
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_create_book(self, mock_db_session, testapp):
         mock_db_session.add.return_value = None
         mock_db_session.commit.return_value = None
@@ -51,7 +51,7 @@ class TestBookRoutes:
         response = testapp.post_json("/books/", book_data)
         assert response.status_code == 200
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_update_book(self, mock_db_session, testapp):
         mock_book = MagicMock()
         mock_book.id = 1
@@ -63,7 +63,7 @@ class TestBookRoutes:
         response = testapp.put_json("/books/1", book_update_data)
         assert response.status_code == 200
 
-    @patch("flask_boilerplate.database.db.session")
+    @patch("backend.database.db.session")
     def test_delete_book(self, mock_db_session, testapp):
         mock_book = MagicMock()
         mock_book.id = 1
