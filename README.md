@@ -5,16 +5,14 @@ There are three main services:
 To run the development version of the app
 
 ```bash
-docker compose up flask-dev
+docker compose up
 ```
 
 To run the production version of the app
 
-```bash
-docker compose up flask-prod
-```
+`Pending...`
 
-The list of `environment:` variables in the `docker compose.yml` file takes precedence over any variables specified in `.env`.
+Note: The list of `environment:` variables in the `docker compose.yml` file takes precedence over any variables specified in `.env`.
 
 To run any commands using the `Flask CLI`
 
@@ -30,27 +28,20 @@ docker compose run --rm manage db migrate
 docker compose run --rm manage db upgrade
 ```
 
-A docker volume `node-modules` is created to store NPM packages and is reused across the dev and prod versions of the application. For the purposes of DB testing with `sqlite`, the file `dev.db` is mounted to all containers. This volume mount should be removed from `docker compose.yml` if a production DB server is used.
-
-Go to `http://localhost:8080`. You will see a pretty welcome screen.
+Go to `http://localhost:9090` for database management
 
 ### Running locally
 
 Run the following commands to bootstrap your environment if you are unable to run the application using Docker
 
-```bash
-cd flask_boilerplate
+````bash
+cd backend
 pip install -r requirements/dev.txt
-npm install
-npm run-script build
-npm start  # run the webpack dev server and flask server using concurrently
-```
-
-Go to `http://localhost:5000`. You will see a pretty welcome screen.
+````
 
 #### Database Initialization (locally)
 
-Once you have installed your DBMS, run the following to create your app's
+Once you have installed your DBMS, run the following to create your app 
 database tables and perform the initial migration
 
 ```bash
@@ -59,30 +50,7 @@ flask db migrate
 flask db upgrade
 ```
 
-## Deployment
 
-When using Docker, reasonable production defaults are set in `docker compose.yml`
-
-```text
-FLASK_ENV=production
-FLASK_DEBUG=0
-```
-
-Therefore, starting the app in "production" mode is as simple as
-
-```bash
-docker compose up flask-prod
-```
-
-If running without Docker
-
-```bash
-export FLASK_ENV=production
-export FLASK_DEBUG=0
-export DATABASE_URL="<YOUR DATABASE URL>"
-npm run build   # build assets with webpack
-flask run       # start the flask server
-```
 
 ## Shell
 
@@ -155,8 +123,8 @@ For example
 
 ```html
 <link
-    rel="shortcut icon"
-    href="{{static_url_for('static', filename='build/favicon.ico') }}"
+  rel="shortcut icon"
+  href="{{static_url_for('static', filename='build/favicon.ico') }}"
 />
 ```
 
