@@ -11,13 +11,24 @@ x-default-volumes: &default_volumes
         - ./dev.db:/tmp/dev.db
 
 services:
+    frontend:
+        build:
+            context: ./frontend
+        image: "frontend"    
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./frontend:/app
+            - node_modules_fe:/app/node_modules
+        
+
     flask-dev:
         build:
             context: .
             target: development
             args:
                 <<: *build_args
-        image: "flask_boilerplate-development"
+        image: "backend-development"
         ports:
             - "8080:5000"
             - "2992:2992"
@@ -25,8 +36,7 @@ services:
         links:
             - mysql
         depends_on:
-            - mysql    
-
+            - mysql
 
     manage:
         build:
@@ -38,11 +48,11 @@ services:
         environment:
             FLASK_ENV: production
             FLASK_DEBUG: 0
-        image: "flask_boilerplate-manage"
-        stdin_open: true 
+        image: "backend-manage"
+        stdin_open: true
         tty: true
         <<: *default_volumes
-    
+
     mysql:
         image: mysql:8.4.0
         environment:
@@ -52,18 +62,20 @@ services:
             - "3307:3306"
         volumes:
             - mysql-data:/var/lib/mysql
-    
+
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         environment:
             PMA_HOST: mysql
             PMA_PORT: 3306
-            MYSQL_ROOT_PASSWORD: test 
+            MYSQL_ROOT_PASSWORD: test
         ports:
-            - "9090:80"  
+            - "9090:80"
         depends_on:
             - mysql
 
+  
 volumes:
+    node_modules_fe:
     node-modules:
     mysql-data:
