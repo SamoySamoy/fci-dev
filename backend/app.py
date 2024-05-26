@@ -3,10 +3,9 @@
 import logging
 import sys
 
-import pymysql
 from flask import Flask, render_template
 
-from backend import author, book, commands, public
+from backend import author, book, commands
 from backend.extensions import (
     bcrypt,
     cache,
@@ -48,7 +47,6 @@ def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(book.routes.blueprint)
     app.register_blueprint(author.routes.blueprint)
-    app.register_blueprint(public.routes.blueprint)
     return None
 
 

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Extensions module. Each extension is initialized in the app factory located in app.py."""
-from flask import Flask
+"""Extension modules initilization."""
 from flask_bcrypt import Bcrypt
 from flask_caching import Cache
 from flask_debugtoolbar import DebugToolbarExtension
@@ -11,6 +10,8 @@ from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):
+    """Initial"""
+
     pass
 
 

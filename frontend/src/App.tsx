@@ -1,9 +1,29 @@
 import { useState } from "react";
-import "./App.css"; // Ensure Tailwind CSS is imported
+import Modal from "react-modal"; // Import the modal component
+import "./App.css";
 
 interface SquareProps {
   value: string | null;
   onSquareClick: () => void;
+}
+function calculateWinner(squares: (string | null)[]): string | null {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
 }
 
 function Square({ value, onSquareClick }: SquareProps) {
@@ -67,6 +87,7 @@ export default function App() {
     Array(9).fill(null),
   ]);
   const [currentMove, setCurrentMove] = useState<GameState["currentMove"]>(0);
+  const [winner, setWinner] = useState<string | null>(null);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -74,10 +95,15 @@ export default function App() {
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
+    const calculatedWinner = calculateWinner(nextSquares);
+    if (calculatedWinner) {
+      setWinner(calculatedWinner);
+    }
   }
 
   function jumpTo(nextMove: number) {
     setCurrentMove(nextMove);
+    setWinner(null);
   }
 
   const moves = history.map((squares, move) => {
@@ -107,26 +133,33 @@ export default function App() {
       <div>
         <ol>{moves}</ol>
       </div>
+      <Modal
+        isOpen={!!winner}
+        onRequestClose={() => setWinner(null)}
+        className="modal"
+        overlayClassName="overlay"
+        style={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "fit-content",
+            padding: "2rem",
+            borderRadius: "8px",
+            background: "#fff",
+            boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.2)",
+          },
+        }}
+      >
+        <div className="modal-content">
+          <h2>Winner!</h2>
+          <p>{winner} has won the game!</p>
+          <button onClick={() => setWinner(null)}>Close</button>
+        </div>
+      </Modal>
     </div>
   );
-}
-
-function calculateWinner(squares: (string | null)[]): string | null {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
 }

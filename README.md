@@ -34,14 +34,14 @@ Go to `http://localhost:9090` for database management
 
 Run the following commands to bootstrap your environment if you are unable to run the application using Docker
 
-````bash
+```bash
 cd backend
 pip install -r requirements/dev.txt
-````
+```
 
 #### Database Initialization (locally)
 
-Once you have installed your DBMS, run the following to create your app 
+Once you have installed your DBMS, run the following to create your app
 database tables and perform the initial migration
 
 ```bash
@@ -49,8 +49,6 @@ flask db init
 flask db migrate
 flask db upgrade
 ```
-
-
 
 ## Shell
 

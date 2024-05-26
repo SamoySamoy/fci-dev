@@ -27,11 +27,7 @@ def test(coverage):
     if coverage:
         args.append("--cov=backend")
         # args.append("--cov-report=xml")
-       
-        
-        
-       
-        
+
     rv = pytest.main(args)
     exit(rv)
 

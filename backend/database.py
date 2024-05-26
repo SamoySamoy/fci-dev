@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Database module, including the SQLAlchemy database object and DB-related utilities."""
-from typing import Optional, Type, TypeVar
-
+"""Database initilization."""
 from .extensions import db
 
 
