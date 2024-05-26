@@ -1,0 +1,8 @@
+# Ensure all text files use LF in the repository but match the native
+# line endings when checked out.
+* text=auto
+
+# Specify line ending normalization for specific file types
+*.sh text eol=lf
+*.bat text eol=crlf
+*.txt text eol=lf
