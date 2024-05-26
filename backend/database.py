@@ -4,7 +4,7 @@ from .extensions import db
 
 
 class Mixin(object):
-    """Mixin that adds convenience methods"""
+    """Mixin that adds convenience methods."""
 
     @classmethod
     def create(cls, **kwargs):

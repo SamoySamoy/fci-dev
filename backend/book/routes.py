@@ -9,7 +9,7 @@ from backend.extensions import db
 from .models import Book
 from .schemas import BookCreateSchema, BookSchema, BookUpdateSchema
 
-blueprint = Blueprint("book", __name__, url_prefix="/books", static_folder="../static")
+blueprint = Blueprint("book", __name__, url_prefix="/books")
 
 
 @blueprint.route("/", methods=["GET"])
@@ -24,7 +24,7 @@ def get_all_books():
 def get_book(book_id):
     """Get a book by ID."""
     try:
-        book = db.session.scalars(db.select(Book).where(Book.id == book_id)).one()
+        book = db.session.scalars(db.select(Book).where(Book.id == book_id)).all()[0]
         book_pydantic = BookSchema.from_orm(book).model_dump()
         return jsonify(book_pydantic), 200
     except NoResultFound:
@@ -49,7 +49,7 @@ def create_book():
 def update_book(book_id):
     """Update an existing book."""
     try:
-        book = db.session.scalars(db.select(Book).where(Book.id == book_id)).one()
+        book = db.session.scalars(db.select(Book).where(Book.id == book_id)).all()[0]
         data = request.json
         book_schema = BookUpdateSchema(**data)
         updates = book_schema.dict(exclude_unset=True)
@@ -67,7 +67,7 @@ def update_book(book_id):
 def delete_book(book_id):
     """Delete a book by ID."""
     try:
-        book = db.session.scalars(db.select(Book).where(Book.id == book_id)).one()
+        book = db.session.scalars(db.select(Book).where(Book.id == book_id)).all()[0]
         db.session.delete(book)
         db.session.commit()
         return jsonify({"message": "Book deleted successfully"}), 200

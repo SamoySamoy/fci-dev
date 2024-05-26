@@ -2,10 +2,8 @@
 """Author models."""
 from __future__ import annotations
 
-from typing import List
-
 from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from backend.database import Model
 
@@ -17,7 +15,6 @@ class Author(Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
     info: Mapped[str] = mapped_column(String(255))
-    books: Mapped[List["Book"]] = relationship(back_populates="author")
 
     def __init__(self, name: str, info: str = None):
         """

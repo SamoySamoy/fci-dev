@@ -9,9 +9,7 @@ from backend.extensions import db
 from .models import Author
 from .schemas import AuthorCreateSchema, AuthorSchema, AuthorUpdateSchema
 
-blueprint = Blueprint(
-    "author", __name__, url_prefix="/authors", static_folder="../static"
-)
+blueprint = Blueprint("author", __name__, url_prefix="/authors")
 
 
 @blueprint.route("/", methods=["GET"])
@@ -30,7 +28,7 @@ def get_author(author_id):
     try:
         author = db.session.scalars(
             db.select(Author).where(Author.id == author_id)
-        ).one()
+        ).all()[0]
         author_pydantic = AuthorSchema.from_orm(author).model_dump()
         return jsonify(author_pydantic), 200
     except NoResultFound:
@@ -57,7 +55,7 @@ def update_author(author_id):
     try:
         author = db.session.scalars(
             db.select(Author).where(Author.id == author_id)
-        ).one()
+        ).all()[0]
     except NoResultFound:
         return jsonify({"error": f"Author with ID {author_id} not found"}), 404
 
