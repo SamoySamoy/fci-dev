@@ -4,8 +4,7 @@ import logging
 import sys
 
 from flask import Flask, render_template
-
-from backend import author, book, commands
+from backend import author, book, public, commands
 from backend.extensions import (
     bcrypt,
     cache,
@@ -14,6 +13,7 @@ from backend.extensions import (
     flask_static_digest,
     migrate,
 )
+from flask_cors import CORS
 
 
 def create_app(config_object="backend.settings"):
@@ -29,6 +29,9 @@ def create_app(config_object="backend.settings"):
     register_shellcontext(app)
     register_commands(app)
     configure_logger(app)
+    CORS(
+        app, resources={r"/*": {"origins": "http://localhost:5173"}}
+    )  # Enable CORS for the specific origin
     return app
 
 
@@ -47,6 +50,7 @@ def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(book.routes.blueprint)
     app.register_blueprint(author.routes.blueprint)
+    app.register_blueprint(public.routes.blueprint)
     return None
 
 

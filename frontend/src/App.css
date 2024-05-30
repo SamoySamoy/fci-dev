@@ -1,42 +1,103 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  max-width: 40rem;
+  margin: 7rem auto 0;
+}
+
+/* Header */
+header {
   text-align: center;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+header nav {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+header nav > a {
+  text-decoration: none;
+  border: 1px solid black;
+  padding: 0.5rem 2rem;
+  color: black;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+header nav > .active {
+  background: black;
+  color: white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* AddForm */
+.form {
+  margin: 2rem auto;
+  max-width: 20rem;
+}
+.inputField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.inputField input {
+  padding: 0.5rem 1rem 0.5rem 0;
+  text-indent: 0.5rem;
+}
+.form .btnForm {
+  background: black;
+  border: 1px solid black;
+  color: white;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.form .btnForm:disabled {
+  background: #ddd;
+  border: 1px solid #ddd;
+  cursor: default;
 }
 
-.card {
-  padding: 2em;
+/* List Book */
+.listBook {
+  margin: 2rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.listBook .noData {
+  text-align: center;
+  grid-column: 1 / span 3;
+  margin-top: 2rem;
+  color: #333;
 }
 
-.read-the-docs {
-  color: #888;
+/* Card */
+.book {
+  background: #ddd;
+  padding: 1rem;
+  border-radius: 5px;
+}
+.book h2 {
+  text-decoration: underline;
+}
+.book .bookDetail {
+  line-height: 25px;
+  margin-top: 0.5rem;
+}
+.book .buttons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.book .buttons > button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
 }

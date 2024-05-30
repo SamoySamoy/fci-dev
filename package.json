@@ -34,12 +34,14 @@
     "@popperjs/core": "2.11.8",
     "bootstrap": "5.3.3",
     "jquery": "3.7.1",
-    "react-modal": "^3.16.1"
+    "react-modal": "^3.16.1",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@babel/core": "7.24.4",
     "@babel/eslint-parser": "7.24.1",
     "@babel/preset-env": "7.24.4",
+    "@types/react-router-dom": "^5.3.3",
     "babel-loader": "9.1.3",
     "chokidar": "3.6.0",
     "concurrently": "8.2.2",
