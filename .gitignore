@@ -51,8 +51,6 @@ env/
 # webpack-built files
 /flask_boilerplate/static/build/
 
-# Configuration
-.env
 
 # Development database
 *.db
