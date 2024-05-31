@@ -1,6 +1,4 @@
-## Docker Quickstart
-
-There are three main services:
+## Running by Docker
 
 To run the development version of the app
 
@@ -8,9 +6,8 @@ To run the development version of the app
 docker compose up
 ```
 
-To run the production version of the app
-
-`Pending...`
+Go to `http://localhost:5173` to see the web
+Go to `http://localhost:9090` for database management (phpmyadmin)
 
 Note: The list of `environment:` variables in the `docker compose.yml` file takes precedence over any variables specified in `.env`.
 
@@ -20,15 +17,13 @@ To run any commands using the `Flask CLI`
 docker compose run --rm manage <<COMMAND>>
 ```
 
-Therefore, to initialize a database you would run
+Therefore, to initialize a database and apply migration you would run
 
 ```bash
 docker compose run --rm manage db init
 docker compose run --rm manage db migrate
 docker compose run --rm manage db upgrade
 ```
-
-Go to `http://localhost:9090` for database management
 
 ### Running locally
 
@@ -107,30 +102,4 @@ git add migrations/*
 git commit -m "Add migrations"
 ```
 
-Make sure folder `migrations/versions` is not empty.
 
-## Asset Management
-
-Files placed inside the `assets` directory and its subdirectories
-(excluding `js` and `css`) will be copied by webpack's
-`file-loader` into the `static/build` directory. In production, the plugin
-`Flask-Static-Digest` zips the webpack content and tags them with a MD5 hash.
-As a result, you must use the `static_url_for` function when including static content,
-as it resolves the correct file name, including the MD5 hash.
-For example
-
-```html
-<link
-  rel="shortcut icon"
-  href="{{static_url_for('static', filename='build/favicon.ico') }}"
-/>
-```
-
-If all of your static files are managed this way, then their filenames will change whenever their
-contents do, and you can ask Flask to tell web browsers that they
-should cache all your assets forever by including the following line
-in `.env`:
-
-```text
-SEND_FILE_MAX_AGE_DEFAULT=31556926  # one year
-```
